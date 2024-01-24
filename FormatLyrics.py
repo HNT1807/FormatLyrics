@@ -4,7 +4,7 @@ import streamlit.components.v1 as components
 st.title('Lyrics Formatter')
 
 # Text area for input
-lyrics = st.text_area("Enter your lyrics here:", height=250)
+lyrics = st.text_area("Paste your lyrics here:", height=250)
 
 # Function to create a styled copy button
 def create_copy_button(text):
