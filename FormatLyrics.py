@@ -6,12 +6,15 @@ st.title('Lyrics Formatter')
 # Text area for input
 lyrics = st.text_area("Enter your lyrics here:", height=250)
 
-# Function to create a copy button
+# Function to create a copy button with transparent background
 def create_copy_button(text):
-    button_html = f"""<html>
+    button_html = f"""
+    <html>
     <body>
     <input type='text' value='{text}' id='copy_input' style='position: absolute; left: -1000px; top: -1000px;'>
-    <button onclick='copyText()'>Copy Formatted Lyrics</button>
+    <button onclick='copyText()' style='background-color: transparent; border: 1px solid #ccc; color: #555; padding: 5px 10px; border-radius: 5px; cursor: pointer;'>
+        Copy Formatted Lyrics
+    </button>
     <script>
     function copyText() {{
         var copyText = document.getElementById("copy_input");
@@ -20,8 +23,9 @@ def create_copy_button(text):
     }}
     </script>
     </body>
-    </html>"""
-    components.html(button_html, height=30)
+    </html>
+    """
+    components.html(button_html, height=50)
 
 # Button to format lyrics
 if st.button('Format Lyrics'):
