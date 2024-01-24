@@ -1,10 +1,10 @@
 import streamlit as st
+import html
+
+def format_lyrics(lyrics):
+    return lyrics.replace("\n", "|")
 
 st.title('Lyrics Formatter')
-
-# Initialize session state for formatted lyrics
-if 'formatted_lyrics' not in st.session_state:
-    st.session_state['formatted_lyrics'] = ''
 
 # Text area for input
 lyrics = st.text_area("Enter your lyrics here:", height=250)
@@ -12,26 +12,28 @@ lyrics = st.text_area("Enter your lyrics here:", height=250)
 # Button to format lyrics
 if st.button('Format Lyrics'):
     if lyrics:
-        st.session_state['formatted_lyrics'] = lyrics.replace("\n", "|")
-        st.text_area("Formatted Lyrics:", value=st.session_state['formatted_lyrics'], height=250, key='output')
+        # Format the lyrics
+        formatted_lyrics = format_lyrics(lyrics)
+        st.session_state['formatted_lyrics'] = formatted_lyrics
+
+        # Display formatted lyrics in a text area
+        st.text_area("Formatted Lyrics:", value=formatted_lyrics, height=250, key='output')
+
+        # Escaping HTML characters in formatted lyrics for safe HTML embedding
+        formatted_lyrics_html = html.escape(formatted_lyrics)
+
+        # Create a button for copying to clipboard
+        copy_button = f'''
+            <button onclick="navigator.clipboard.writeText('{formatted_lyrics_html}')">Copy Formatted Lyrics</button>
+        '''
+        st.markdown(copy_button, unsafe_allow_html=True)
     else:
         st.error("Please enter some lyrics to format.")
-
-# Button to copy lyrics
-if st.button('Copy Formatted Lyrics'):
-    if st.session_state['formatted_lyrics']:
-        # Create a temporary textarea to hold the formatted text
-        copy_js = f"""
-            <textarea id="temp_textarea" style="position: absolute; left: -9999px;">{st.session_state['formatted_lyrics']}</textarea>
-            <script>
-            var textarea = document.getElementById("temp_textarea");
-            textarea.select();
-            document.execCommand("copy");
-            textarea.remove();
-            </script>
-        """
-        st.markdown(copy_js, unsafe_allow_html=True)
-        st.success("Formatted lyrics copied to clipboard!")
-    else:
-        st.error("There are no formatted lyrics to copy.")
-
+elif 'formatted_lyrics' in st.session_state:
+    # Display the previously formatted lyrics if available
+    st.text_area("Formatted Lyrics:", value=st.session_state['formatted_lyrics'], height=250, key='output')
+    formatted_lyrics_html = html.escape(st.session_state['formatted_lyrics'])
+    copy_button = f'''
+        <button onclick="navigator.clipboard.writeText('{formatted_lyrics_html}')">Copy Formatted Lyrics</button>
+    '''
+    st.markdown(copy_button, unsafe_allow_html=True)
