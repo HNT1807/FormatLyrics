@@ -9,21 +9,8 @@ lyrics = st.text_area("Paste your lyrics here:", height=250)
 # Function to create a styled copy button
 def create_copy_button(text):
     button_html = f"""
-    <style>
-        .copy-btn {{
-            background-color: transparent;
-            border: 1px solid #ccc;
-            color: #555;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            display: inline-block;
-            margin: 0;
-        }}
-    </style>
     <input type='text' value='{text}' id='copy_input' style='position: absolute; left: -9999px;'>
-    <button class='copy-btn' onclick='copyText()'>Copy Formatted Lyrics</button>
+    <button onclick='copyText()' style='background-color: transparent; border: 1px solid #ccc; color: #555; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin: 0;'>Copy Formatted Lyrics</button>
     <script>
     function copyText() {{
         var copyText = document.getElementById("copy_input");
