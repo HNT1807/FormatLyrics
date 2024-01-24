@@ -4,17 +4,26 @@ import streamlit.components.v1 as components
 st.title('Lyrics Formatter')
 
 # Text area for input
-lyrics = st.text_area("Enter your lyrics here:", height=250)
+lyrics = st.text_area("Paste your lyrics here:", height=250)
 
-# Function to create a copy button with transparent background
+# Function to create a styled copy button
 def create_copy_button(text):
     button_html = f"""
-    <html>
-    <body>
-    <input type='text' value='{text}' id='copy_input' style='position: absolute; left: -1000px; top: -1000px;'>
-    <button onclick='copyText()' style='background-color: transparent; border: 1px solid #ccc; color: #555; padding: 5px 10px; border-radius: 5px; cursor: pointer;'>
-        Copy Formatted Lyrics
-    </button>
+    <style>
+        .copy-btn {{
+            background-color: transparent;
+            border: 1px solid #ccc;
+            color: #555;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            margin: 0;
+        }}
+    </style>
+    <input type='text' value='{text}' id='copy_input' style='position: absolute; left: -9999px;'>
+    <button class='copy-btn' onclick='copyText()'>Copy Formatted Lyrics</button>
     <script>
     function copyText() {{
         var copyText = document.getElementById("copy_input");
@@ -22,10 +31,8 @@ def create_copy_button(text):
         document.execCommand("copy");
     }}
     </script>
-    </body>
-    </html>
     """
-    components.html(button_html, height=50)
+    components.html(button_html, height=30)
 
 # Button to format lyrics
 if st.button('Format Lyrics'):
