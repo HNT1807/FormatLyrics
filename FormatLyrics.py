@@ -20,16 +20,18 @@ if st.button('Format Lyrics'):
 # Button to copy lyrics
 if st.button('Copy Formatted Lyrics'):
     if st.session_state['formatted_lyrics']:
-        # JavaScript to copy text to clipboard
+        # Create a temporary textarea to hold the formatted text
         copy_js = f"""
-            <textarea id="text_to_copy" style="opacity: 0;">{st.session_state['formatted_lyrics']}</textarea>
+            <textarea id="temp_textarea" style="position: absolute; left: -9999px;">{st.session_state['formatted_lyrics']}</textarea>
             <script>
-            var copyText = document.getElementById("text_to_copy");
-            copyText.select();
+            var textarea = document.getElementById("temp_textarea");
+            textarea.select();
             document.execCommand("copy");
+            textarea.remove();
             </script>
         """
         st.markdown(copy_js, unsafe_allow_html=True)
         st.success("Formatted lyrics copied to clipboard!")
     else:
         st.error("There are no formatted lyrics to copy.")
+
