@@ -16,7 +16,7 @@ if st.button('Format Lyrics'):
         st.error("Please enter some lyrics to format.")
 
 # Button to copy lyrics
-if st.button('Copy Lyrics'):
+if st.button('Copy Formatted Lyrics'):
     if formatted_lyrics:
         pyperclip.copy(formatted_lyrics)
         st.success("Formatted lyrics copied to clipboard!")
